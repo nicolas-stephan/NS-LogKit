@@ -1,3 +1,10 @@
+# 1.0.0 (2026-06-05)
+
+
+### Features
+
+* initial release ([1373e7d](https://github.com/nicolas-stephan/NS-LogKit/commit/1373e7d2f9558f6139b593ce372697cc241f3970))
+
 ## [1.2.2](https://github.com/nicolas-stephan/NS-LogKit/compare/v1.2.1...v1.2.2) (2026-06-05)
 
 
