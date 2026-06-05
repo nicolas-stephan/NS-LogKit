@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Usage | LogKit </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Usage | LogKit ">
+      
+      
+      <link rel="icon" href="../media/logo.png">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/nicolas-stephan/NS-LogKit/blob/main/docs/manual/usage.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../media/logo.png" alt="LogKit">
+            LogKit
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="usage">Usage</h1>
+
+<p>NS.LogKit provides a small, focused API for runtime channel-based logging:</p>
+<ul>
+<li><code>PackageLogger</code> — lightweight channel logger used from package code.</li>
+<li><code>LogChannel</code> — runtime representation of a channel with a name, enabled state, and minimum log level.</li>
+<li><code>LogChannelRegistry</code> — global registry for channels and group-based control.</li>
+<li><code>LogKitSettings</code> — a <code>ScriptableObject</code> loaded from <code>Resources/LogKitSettings</code> that persists runtime channel configuration.</li>
+</ul>
+<h2 id="packagelogger">PackageLogger</h2>
+<p>Obtain a logger for a channel with:</p>
+<pre><code class="lang-csharp">private static readonly PackageLogger Log = PackageLogger.For(&quot;MyPackage.Physics&quot;);
+</code></pre>
+<p>Available methods (compiled only when <code>ENABLE_LOGS</code> is defined):</p>
+<ul>
+<li><code>Info(string message, UnityEngine.Object? context = null)</code></li>
+<li><code>Info(string format, params object[] args)</code></li>
+<li><code>Warn(string message, UnityEngine.Object? context = null)</code></li>
+<li><code>Warn(string format, params object[] args)</code></li>
+<li><code>Error(string message, UnityEngine.Object? context = null)</code></li>
+<li><code>Error(string format, params object[] args)</code></li>
+<li><code>Exception(System.Exception ex, UnityEngine.Object? context = null)</code></li>
+<li><code>Verbose(string message, UnityEngine.Object? context = null)</code> — additionally requires <code>ENABLE_VERBOSE_LOG</code></li>
+<li><code>Verbose(string format, params object[] args)</code> — additionally requires <code>ENABLE_VERBOSE_LOG</code></li>
+</ul>
+<p>Notes</p>
+<ul>
+<li>The logger prefixes messages with the channel name, for example: <code>[MyPackage.Physics] message</code>.</li>
+<li>The implementation forwards messages to <code>UnityEngine.Debug</code> using <code>Log</code>, <code>LogWarning</code>, <code>LogError</code>, and <code>LogException</code>.</li>
+</ul>
+<h2 id="channel-control">Channel control</h2>
+<p>Use <code>LogChannelRegistry</code> to inspect and control channels at runtime:</p>
+<pre><code class="lang-csharp">var channel = LogChannelRegistry.GetOrCreate(&quot;MyPackage.Physics&quot;);
+channel.Enable(LogLevel.Info); // enable and set minimum level
+channel.Disable(); // disable this channel
+
+// Group operations
+LogChannelRegistry.SetGroupEnabled(&quot;MyPackage.&quot;, false);
+LogChannelRegistry.SetGroupMinLevel(&quot;MyPackage.&quot;, LogLevel.Warning);
+LogChannelRegistry.SetAllEnabled(false);
+</code></pre>
+<h2 id="logkitsettings">LogKitSettings</h2>
+<p>Create a <code>LogKitSettings</code> asset via <code>Assets -&gt; Create -&gt; NS -&gt; LogKit Settings</code>.</p>
+<p>The asset must be located in a <code>Resources</code> folder under the name <code>LogKitSettings</code> so it can be loaded automatically at startup. Runtime initialization is handled by the internal <code>LogSettingsLoader</code>, which calls <code>LogKitSettings.LoadAndApply()</code> during subsystem registration.</p>
+<p><code>LogKitSettings</code> applies channel settings as follows:</p>
+<ul>
+<li>if <code>GlobalEnabled</code> is false, all logs are disabled;</li>
+<li>otherwise, each <code>ChannelConfig</code> entry with a non-empty <code>Name</code> is applied to <code>LogChannelRegistry</code>.</li>
+</ul>
+<p>Each <code>ChannelConfig</code> entry exposes:</p>
+<ul>
+<li><code>Name</code></li>
+<li><code>IsEnabled</code></li>
+<li><code>MinLevel</code></li>
+</ul>
+<h2 id="editor-integration">Editor integration</h2>
+<p>The <code>LogKitSettings</code> asset exposes <code>SyncWithRegistry()</code> under <code>#if UNITY_EDITOR</code>, which can be used by editor tooling to populate the settings asset with discovered channels and preserve their current enable/min-level state.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/nicolas-stephan/NS-LogKit/blob/main/docs/manual/usage.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
