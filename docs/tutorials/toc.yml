@@ -1,0 +1,5 @@
+﻿pdf: true
+pdfFileName: NS-LogKit-tutorials.pdf
+items:
+  - name: Overview
+    href: index.md

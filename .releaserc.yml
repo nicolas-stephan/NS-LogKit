@@ -1,0 +1,22 @@
+plugins:
+  - '@semantic-release/commit-analyzer'
+  - '@semantic-release/release-notes-generator'
+  
+  - - '@semantic-release/exec'
+    - prepareCmd: "find Assets/LogKit -name AssemblyInfo.cs -exec sed -i -e '/AssemblyVersion/s/\"[^\"]*\"/\"${nextRelease.version}\"/' {} +"
+
+  - - '@semantic-release/changelog'
+    - changelogFile: 'Assets/LogKit/CHANGELOG.md'
+
+  - - '@semantic-release/npm'
+    - npmPublish: false
+      pkgRoot: "Assets/LogKit"
+      
+  - - '@semantic-release/git'
+    - assets:
+        - 'Assets/LogKit/**/AssemblyInfo.cs'
+        - 'Assets/LogKit/package.json'
+        - 'Assets/LogKit/CHANGELOG.md'
+      message: "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      
+  - '@semantic-release/github'

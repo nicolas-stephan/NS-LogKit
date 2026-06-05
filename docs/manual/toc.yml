@@ -1,0 +1,9 @@
+pdf: true
+pdfFileName: NS-LogKit-manual.pdf
+items:
+  - name: Getting Started
+    href: index.md
+  - name: Installation
+    href: installation.md
+  - name: Usage
+    href: usage.md

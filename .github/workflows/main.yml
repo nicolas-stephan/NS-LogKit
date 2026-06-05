@@ -1,0 +1,70 @@
+name: Main Test and Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - dev
+    paths:
+      - 'Assets/**'
+      - 'Packages/**'
+      - 'ProjectSettings/**'
+      - 'docs/**'
+      - '.releaserc.yml'
+      - '.github/workflows/main.yml'
+      - '.github/workflows/run-test.yml'
+
+permissions:
+  actions: read
+  contents: write
+  pull-requests: write
+  checks: write
+  issues: write
+
+jobs:
+
+  Tests:
+    name: Run Tests
+    uses: ./.github/workflows/run-test.yml
+    secrets:
+      unity_license: ${{ secrets.UNITY_LICENSE }}
+      unity_email: ${{ secrets.UNITY_EMAIL }}
+      unity_password: ${{ secrets.UNITY_PASSWORD }}
+    with:
+      cache_key: Library-${{ github.repository_id }}
+
+  Publish:
+    needs: [ Tests ]
+    if: github.ref == 'refs/heads/main'
+    name: Publish
+    runs-on: ubuntu-latest
+    outputs:
+      new_release_published: ${{ steps.semantic.outputs.new_release_published }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: true
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '18'
+
+      - name: Release
+        uses: cycjimmy/semantic-release-action@v6
+        id: semantic
+        with:
+          extra_plugins: |
+            @semantic-release/exec
+            @semantic-release/changelog
+            @semantic-release/git
+          branch: main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+  Deploy-Docs:
+    needs: [ Publish ]
+    if: needs.Publish.outputs.new_release_published == 'true'
+    uses: ./.github/workflows/docs.yml
+    

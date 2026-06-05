@@ -1,0 +1,82 @@
+﻿{
+  "metadata": [
+    {
+      "src": [
+        {
+          "files": [
+            "NS.LogKit.csproj"
+          ],
+          "src": ".."
+        }
+      ],
+      "dest": "api",
+      "filter": "filterConfig.yml",
+      "includePrivateMembers": false,
+      "disableGitFeatures": false,
+      "disableDefaultFilter": false,
+      "noRestore": false,
+      "namespaceLayout": "flattened",
+      "memberLayout": "samePage",
+      "allowCompilationErrors": true
+    }
+  ],
+  "build": {
+    "globalMetadata": {
+      "_appTitle": "LogKit",
+      "_appName": "LogKit",
+      "_appLogoPath": "media/logo.png",
+      "_appFaviconPath": "media/logo.png",
+      "_appFooter": "",
+      "_enableSearch": true,
+      "_gitContribute": {
+        "repo": "https://github.com/nicolas-stephan/NS-LogKit.git",
+        "branch": "main"
+      }
+    },
+    "fileMetadata": {},
+    "content": [
+      {
+        "files": [
+          "**/*.md",
+          "**/toc.yml"
+        ],
+        "src": "."
+      },
+      {
+        "files": [
+          "**.yml",
+          "**/toc.yml"
+        ],
+        "src": "api"
+      }
+    ],
+    "styles": [
+      "template/public/main.css"
+    ],
+    "resource": [
+      {
+        "files": [
+          "media/**"
+        ],
+        "src": "."
+      }
+    ],
+    "output": "_site",
+    "markdownEngineProperties": {
+      "toc": {
+        "levels": "1,2,3"
+      }
+    },
+    "fileMetadataFiles": [],
+    "template": [
+      "default",
+      "modern",
+      "template"
+    ],
+    "postProcessors": [
+      "ExtractSearchIndex"
+    ],
+    "keepFileLink": false,
+    "disableGitFeatures": false
+  }
+}

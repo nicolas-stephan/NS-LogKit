@@ -1,0 +1,14 @@
+{
+  "name": "com.ns.log-kit",
+  "displayName": "NS - LogKit",
+  "version": "1.2.2",
+  "unity": "6000.0",
+  "description": "",
+  "author": "Nicolas Stephan",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nicolas-stephan/NS-LogKit.git"
+  },
+  "dependencies": {},
+  "samples": []
+}
