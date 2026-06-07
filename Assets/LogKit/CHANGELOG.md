@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/nicolas-stephan/NS-LogKit/compare/v1.0.0...v1.0.1) (2026-06-07)
+
+
+### Bug Fixes
+
+* update package URLs in README and installation documentation ([527300b](https://github.com/nicolas-stephan/NS-LogKit/commit/527300bbeeb7f3c530034736b31473d6b3701f23))
+
 # 1.0.0 (2026-06-05)
 
 
