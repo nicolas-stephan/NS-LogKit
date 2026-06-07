@@ -5,7 +5,7 @@ To add NS-LogKit to your Unity project, use the Package Manager by adding the pa
 ```json
 {
   "dependencies": {
-    "com.ns.log-kit": "https://github.com/nicolas-stephan/NS-LogKit.git"
+    "com.ns.log-kit": "https://github.com/nicolas-stephan/NS-LogKit.git?path=/Assets/LogKit"
   }
 }
 ```
@@ -13,7 +13,7 @@ To add NS-LogKit to your Unity project, use the Package Manager by adding the pa
 Alternatively, pin a specific release tag:
 
 ```json
-"com.ns.log-kit": "https://github.com/nicolas-stephan/NS-LogKit.git#v1.1.4"
+"com.ns.log-kit": "https://github.com/nicolas-stephan/NS-LogKit.git?path=/Assets/LogKit#v1.1.4"
 ```
 
 Requirements

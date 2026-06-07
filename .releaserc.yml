@@ -3,7 +3,7 @@ plugins:
   - '@semantic-release/release-notes-generator'
   
   - - '@semantic-release/exec'
-    - prepareCmd: "find Assets/LogKit -name AssemblyInfo.cs -exec sed -i -e '/AssemblyVersion/s/\"[^\"]*\"/\"${nextRelease.version}\"/' {} +"
+    - prepareCmd: "find Assets/LogKit -name AssemblyInfo.cs -exec sed -i -e '/AssemblyVersion/s/\"[^\"]*\"/\"${nextRelease.version}\"/' {} + && sed -i -e 's|https://github.com/nicolas-stephan/NS-LogKit.git?path=/Assets/LogKit#v[0-9]\\+\\.[0-9]\\+\\.[0-9]\\+|https://github.com/nicolas-stephan/NS-LogKit.git?path=/Assets/LogKit#v${nextRelease.version}|g' README.md docs/manual/installation.md"
 
   - - '@semantic-release/changelog'
     - changelogFile: 'Assets/LogKit/CHANGELOG.md'

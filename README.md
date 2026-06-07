@@ -16,7 +16,7 @@ Add the package to your `Packages/manifest.json` to install it from the git repo
 ```json
 {
   "dependencies": {
-    "com.ns.log-kit": "https://github.com/nicolas-stephan/NS-LogKit.git"
+    "com.ns.log-kit": "https://github.com/nicolas-stephan/NS-LogKit.git?path=/Assets/LogKit"
   }
 }
 ```
@@ -24,7 +24,7 @@ Add the package to your `Packages/manifest.json` to install it from the git repo
 Or point to a specific tag:
 
 ```json
-"com.ns.log-kit": "https://github.com/nicolas-stephan/NS-LogKit.git#v1.0.0"
+"com.ns.log-kit": "https://github.com/nicolas-stephan/NS-LogKit.git?path=/Assets/LogKit#v1.0.0"
 ```
 
 **Requirements:** Unity 6000+ (or the project-targeted Unity version). Check the documentation for exact compatibility.
